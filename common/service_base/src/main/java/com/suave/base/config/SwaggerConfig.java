@@ -3,7 +3,7 @@ package com.suave.base.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
@@ -24,8 +24,7 @@ public class SwaggerConfig {
                 .groupName("webApi")
                 .apiInfo(webApiInfo())
                 .select()
-                .paths(PathSelectors.regex("/admin/.*"))
-                .paths(PathSelectors.regex("/error.*"))
+                .apis(RequestHandlerSelectors.basePackage("com.suave"))
                 .build();
 
     }

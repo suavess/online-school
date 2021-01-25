@@ -26,7 +26,7 @@
         <MindSchool.version>0.0.1-SNAPSHOT</MindSchool.version>
         <mybatis-plus.version>3.0.7</mybatis-plus.version>
         <velocity.version>2.0</velocity.version>
-        <swagger.version>3.0.0</swagger.version>
+        <swagger.version>2.9.1</swagger.version>
         <aliyun.oss.version>3.1.0</aliyun.oss.version>
         <jodatime.version>2.10.1</jodatime.version>
         <poi.version>3.17</poi.version>
