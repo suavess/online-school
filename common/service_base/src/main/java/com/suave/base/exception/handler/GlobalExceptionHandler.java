@@ -30,7 +30,6 @@ public class GlobalExceptionHandler {
     public R error(MyException e) {
         log.error(e.getMessage());
         e.printStackTrace();
-
         return R.error().code(e.getCode()).message(e.getMsg());
     }
 
