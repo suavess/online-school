@@ -2,7 +2,7 @@ package com.suave.edu.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.suave.edu.entity.Subject;
-import com.suave.edu.entity.subject.OneSubject;
+import com.suave.edu.entity.subject.SubjectDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -23,8 +23,10 @@ public interface SubjectService extends IService<Subject> {
     void saveSubject(MultipartFile file, SubjectService SubjectService);
 
     /**
-     * 课程分类列表功能
+     * 递归获取所有课程列表
+     *
+     * @return
      */
-    List<OneSubject> getAllOneTwoSubject();
+    List<SubjectDTO> getAllSubjectList(List<SubjectDTO> subjectDTOS);
 
 }

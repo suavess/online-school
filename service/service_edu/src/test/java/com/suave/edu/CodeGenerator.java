@@ -1,4 +1,4 @@
-package com.suave.cloud;
+package com.suave.edu;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;

@@ -2,7 +2,7 @@ package com.suave.edu.controller;
 
 
 import com.suave.common.result.R;
-import com.suave.edu.entity.subject.OneSubject;
+import com.suave.edu.entity.subject.SubjectDTO;
 import com.suave.edu.service.SubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,12 +43,15 @@ public class SubjectController {
         return R.ok();
     }
 
-    //课程分类列表功能  树形结构显示
+    /**
+     * 课程分类列表功能
+     * 树形结构显示
+     */
     @ApiOperation(value = "课程分类列表")
     @GetMapping("getAllSubject")
     public R getAllSubject() {
         //list集合泛型是一级分类  一级分类下包含二级分类
-        List<OneSubject> list = subjectService.getAllOneTwoSubject();
+        List<SubjectDTO> list = subjectService.getAllSubjectList(null);
         return R.ok().data("list", list);
     }
 
