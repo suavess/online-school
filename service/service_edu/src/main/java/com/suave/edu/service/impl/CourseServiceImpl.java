@@ -5,6 +5,7 @@ import com.suave.base.exception.MyException;
 import com.suave.edu.entity.Course;
 import com.suave.edu.entity.CourseDescription;
 import com.suave.edu.entity.vo.CourseInfoVO;
+import com.suave.edu.entity.vo.CoursePublishVO;
 import com.suave.edu.mapper.CourseMapper;
 import com.suave.edu.service.ChapterService;
 import com.suave.edu.service.CourseDescriptionService;
@@ -99,5 +100,19 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         BeanUtils.copyProperties(courseInfoVo, description);
         courseDescriptionService.updateById(description);
     }
+
+    /**
+     * 根据课程id查询课程确认信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public CoursePublishVO publishCourseInfo(String id) {
+        //调用mapper接口方法
+        CoursePublishVO publishCourseInfo = this.baseMapper.getPublishCourseInfo(id);
+        return publishCourseInfo;
+    }
+
 
 }

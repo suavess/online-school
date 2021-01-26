@@ -2,7 +2,9 @@ package com.suave.edu.controller;
 
 
 import com.suave.common.result.R;
+import com.suave.edu.entity.Course;
 import com.suave.edu.entity.vo.CourseInfoVO;
+import com.suave.edu.entity.vo.CoursePublishVO;
 import com.suave.edu.service.CourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -64,6 +66,36 @@ public class CourseController {
         courseService.updateCourseInfo(courseInfoVo);
         return R.ok();
     }
+
+    /**
+     * 根据课程id查询课程确认信息
+     *
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "确认课程信息")
+    @GetMapping("getPublishCourseInfo/{id}")
+    public R getPublishCourseInfo(@PathVariable String id) {
+        CoursePublishVO coursePublishVo = courseService.publishCourseInfo(id);
+        return R.ok().data("publishCourse", coursePublishVo);
+    }
+
+    /**
+     * 课程最终发布 修改课程表中status状态
+     *
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "课程最终发布")
+    @PostMapping("publishCourse/{id}")
+    public R publishCourse(@PathVariable String id) {
+        Course course = new Course();
+        course.setId(id);
+        course.setStatus("Normal");
+        courseService.updateById(course);
+        return R.ok();
+    }
+
 
 }
 
