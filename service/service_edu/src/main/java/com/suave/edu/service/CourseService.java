@@ -2,6 +2,7 @@ package com.suave.edu.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.suave.edu.entity.Course;
+import com.suave.edu.entity.vo.CourseInfoVO;
 
 /**
  * <p>
@@ -13,4 +14,10 @@ import com.suave.edu.entity.Course;
  */
 public interface CourseService extends IService<Course> {
 
+    /**
+     * 添加课程基本信息
+     *
+     * @param courseInfoVO
+     */
+    void saveCourseInfo(CourseInfoVO courseInfoVO);
 }
