@@ -102,13 +102,13 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
         //判断
         //查询出小节，不进行删除
         if (count > 0) {
-            throw new MyException(20001, "不能删除");
-        } else { //不能查询数据，进行删除
-            //删除章节
-            int result = baseMapper.deleteById(chapterId);
-            //成功  1>0   0>0
-            return result > 0;
+            throw new MyException(20001, "该章节下还有小节，无法删除哦");
         }
+        //删除章节
+        int result = baseMapper.deleteById(chapterId);
+        //成功  1>0   0>0
+        return result > 0;
+
     }
 
     /**

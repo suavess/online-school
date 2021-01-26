@@ -5,6 +5,7 @@ import com.suave.common.result.R;
 import com.suave.edu.entity.Chapter;
 import com.suave.edu.entity.chapter.ChapterVO;
 import com.suave.edu.service.ChapterService;
+import com.suave.edu.service.VideoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,9 @@ public class ChapterController {
     @Autowired
     private ChapterService chapterService;
 
+    @Autowired
+    private VideoService videoService;
+
     /**
      * 课程大纲列表
      *
@@ -41,13 +45,13 @@ public class ChapterController {
     /**
      * 添加章节
      *
-     * @param eduChapter
+     * @param chapter
      * @return
      */
     @ApiOperation(value = "添加章节")
     @PostMapping("addChapter")
-    public R addChapter(@RequestBody Chapter eduChapter) {
-        chapterService.save(eduChapter);
+    public R addChapter(@RequestBody Chapter chapter) {
+        chapterService.save(chapter);
         return R.ok();
     }
 
@@ -60,20 +64,20 @@ public class ChapterController {
     @ApiOperation(value = "根据章节id查询")
     @GetMapping("getChapterInfo/{chapterId}")
     public R getChapterInfo(@PathVariable String chapterId) {
-        Chapter eduChapter = chapterService.getById(chapterId);
-        return R.ok().data("chapter", eduChapter);
+        Chapter chapter = chapterService.getById(chapterId);
+        return R.ok().data("chapter", chapter);
     }
 
     /**
      * 修改章节
      *
-     * @param eduChapter
+     * @param chapter
      * @return
      */
     @ApiOperation(value = "修改章节")
     @PostMapping("updateChapter")
-    public R updateChapter(@RequestBody Chapter eduChapter) {
-        chapterService.updateById(eduChapter);
+    public R updateChapter(@RequestBody Chapter chapter) {
+        chapterService.updateById(chapter);
         return R.ok();
     }
 
@@ -86,13 +90,7 @@ public class ChapterController {
     @ApiOperation(value = "删除章节")
     @DeleteMapping("{chapterId}")
     public R deleteChapter(@PathVariable String chapterId) {
-        boolean flag = chapterService.deleteChapter(chapterId);
-        if (flag) {
-            return R.ok();
-        } else {
-            return R.error();
-        }
-
+        return chapterService.deleteChapter(chapterId) ? R.ok() : R.error();
     }
 
 
