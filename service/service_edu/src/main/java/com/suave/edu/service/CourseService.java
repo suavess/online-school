@@ -18,6 +18,23 @@ public interface CourseService extends IService<Course> {
      * 添加课程基本信息
      *
      * @param courseInfoVO
+     * @return
      */
-    void saveCourseInfo(CourseInfoVO courseInfoVO);
+    String saveCourseInfo(CourseInfoVO courseInfoVO);
+
+
+    /**
+     * 根据课程id查询课程基本信息 回显
+     *
+     * @param courseId
+     * @return
+     */
+    CourseInfoVO getCourseInfo(String courseId);
+
+    /**
+     * 修改课程信息
+     *
+     * @param courseInfoVo
+     */
+    void updateCourseInfo(CourseInfoVO courseInfoVo);
 }
