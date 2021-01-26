@@ -73,8 +73,6 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
                 }
                 List<SubjectDTO> allSubjectList = getAllSubjectList(child);
                 subjectDTO.setChildren(allSubjectList);
-            } else {
-                subjectDTO.setChildren(null);
             }
         }
         return subjectDTOs;

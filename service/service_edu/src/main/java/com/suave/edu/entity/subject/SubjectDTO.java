@@ -2,7 +2,6 @@ package com.suave.edu.entity.subject;
 
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ public class SubjectDTO {
     /**
      * 一个一级分类有多个二级分类
      */
-    private List<SubjectDTO> children = new ArrayList<>();
+    private List<SubjectDTO> children;
 
 
 }
