@@ -14,4 +14,11 @@ public interface VodService {
      * @return
      */
     String uploadAliVideo(MultipartFile file);
+
+    /**
+     * 删除阿里云视频
+     *
+     * @param id
+     */
+    void removeAliVideo(String id);
 }

@@ -3,9 +3,7 @@ package com.suave.vod.controller;
 import com.suave.common.result.R;
 import com.suave.vod.service.VodService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -28,5 +26,11 @@ public class VodController {
     public R uploadAliVideo(MultipartFile file) {
         String videoId = vodService.uploadAliVideo(file);
         return R.ok().data("videoId", videoId);
+    }
+
+    @DeleteMapping("removeAliVideo/{id}")
+    public R removeAliVideo(@PathVariable("id") String id) {
+        vodService.removeAliVideo(id);
+        return R.ok();
     }
 }

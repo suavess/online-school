@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.aliyun.oss.OSSClient;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.vod.model.v20170321.CreateUploadVideoResponse;
+import com.suave.base.exception.MyException;
 import com.suave.vod.constant.VodConstant;
 import com.suave.vod.service.VodService;
 import com.suave.vod.utils.VodClientUtil;
@@ -55,6 +56,22 @@ public class VodServiceImpl implements VodService {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    /**
+     * 删除阿里云视频
+     *
+     * @param id
+     */
+    @Override
+    public void removeAliVideo(String id) {
+        DefaultAcsClient client = VodClientUtil.initVodClient(VodConstant.ACCESS_KEY_ID, VodConstant.ACCESS_KEY_SECRET);
+        try {
+            VodClientUtil.deleteVideo(client, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MyException(20001, "删除视频失败！");
         }
     }
 }
