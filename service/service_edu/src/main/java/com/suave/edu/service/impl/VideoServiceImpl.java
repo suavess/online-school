@@ -50,9 +50,9 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         }
 
         //根据多个视频id删除多个视频
-        if (videoIds.size() > 0) {
-            vodClient.deleteBatch(videoIds);
-        }
+//        if (videoIds.size() > 0) {
+//            vodClient.deleteBatch(videoIds);
+//        }
 
         QueryWrapper<Video> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id", courseId);
