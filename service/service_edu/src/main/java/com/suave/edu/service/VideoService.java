@@ -13,4 +13,10 @@ import com.suave.edu.entity.Video;
  */
 public interface VideoService extends IService<Video> {
 
+    /**
+     * 根据课程id删除小节
+     *
+     * @param courseId
+     */
+    void removeVideoByCourseId(String courseId);
 }

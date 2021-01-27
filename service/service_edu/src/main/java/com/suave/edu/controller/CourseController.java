@@ -1,15 +1,21 @@
 package com.suave.edu.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.suave.common.result.R;
 import com.suave.edu.entity.Course;
 import com.suave.edu.entity.vo.CourseInfoVO;
 import com.suave.edu.entity.vo.CoursePublishVO;
+import com.suave.edu.entity.vo.CourseQuery;
 import com.suave.edu.service.CourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -33,7 +39,7 @@ public class CourseController {
      * @param courseInfoVo
      * @return
      */
-    @ApiOperation(value = "")
+    @ApiOperation(value = "添加课程基本信息")
     @PostMapping("addCourseInfo")
     public R addCourseInfo(@RequestBody CourseInfoVO courseInfoVo) {
         //返回添加之后课程id，为了第二个页面添加课程大纲使用
@@ -93,6 +99,62 @@ public class CourseController {
         course.setId(id);
         course.setStatus("Normal");
         courseService.updateById(course);
+        return R.ok();
+    }
+
+    /**
+     * 课程列表分页查询显示带条件
+     *
+     * @param current     当前页
+     * @param limit       每页记录数
+     * @param courseQuery
+     * @return
+     */
+    @ApiOperation(value = "课程列表分页查询显示带条件")
+    @PostMapping("pageCourseCondition/{current}/{limit}")
+    public R pageCourseCondition(@PathVariable long current, @PathVariable long limit,
+                                 @RequestBody(required = false) CourseQuery courseQuery) {
+        //创建page对象
+        Page<Course> pageCourse = new Page<>(current, limit);
+        //构建条件
+        QueryWrapper<Course> wrapper = new QueryWrapper<>();
+
+        // 多条件组合查询
+        // mybatis学过 动态sql
+        String title = courseQuery.getTitle();
+        String status = courseQuery.getStatus();
+
+        //判断条件值是否为空，如果不为空拼接条件
+        if (!StringUtils.isEmpty(title)) {
+            //构建条件
+            wrapper.like("title", title);
+        }
+        if (!StringUtils.isEmpty(status)) {
+            wrapper.eq("status", status);
+        }
+
+        //排序
+        wrapper.orderByDesc("gmt_create");
+
+        //调用方法实现条件查询分页
+        courseService.page(pageCourse, wrapper);
+        //总记录数
+        long total = pageCourse.getTotal();
+        //数据list集合
+        List<Course> records = pageCourse.getRecords();
+        return R.ok().data("total", total).data("records", records);
+    }
+
+    /**
+     * 删除课程
+     *
+     * @param courseId
+     * @return
+     */
+    @ApiOperation(value = "删除课程")
+    @DeleteMapping("deleteCourseById/{courseId}")
+    public R deleteCourse(@PathVariable String courseId) {
+        courseService.removeCourse(courseId);
         return R.ok();
     }
 

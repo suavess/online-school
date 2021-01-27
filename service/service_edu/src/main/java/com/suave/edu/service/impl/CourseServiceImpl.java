@@ -114,5 +114,29 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         return publishCourseInfo;
     }
 
+    /**
+     * 删除课程
+     *
+     * @param courseId
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void removeCourse(String courseId) {
+        //1 根据课程id删除小节
+        videoService.removeVideoByCourseId(courseId);
 
+        //2 根据课程id删除章节
+        chapterService.removeChapterByCourseId(courseId);
+
+        //3 根据课程id删除描述
+        courseDescriptionService.removeById(courseId);
+
+        //4 根据课程id删除课程本身
+        int result = baseMapper.deleteById(courseId);
+        //失败返回
+        if (result == 0) {
+            throw new MyException(20001, "删除失败");
+        }
+
+    }
 }

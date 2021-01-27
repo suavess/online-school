@@ -34,10 +34,10 @@
         <commons-io.version>2.6</commons-io.version>
         <httpclient.version>4.5.1</httpclient.version>
         <jwt.version>0.7.0</jwt.version>
-        <aliyun-java-sdk-core.version>4.3.3</aliyun-java-sdk-core.version>
-        <aliyun-java-sdk-vod.version>2.15.2</aliyun-java-sdk-vod.version>
-        <aliyun-java-vod-upload.version>1.4.11</aliyun-java-vod-upload.version>
-        <aliyun-sdk-vod-upload.version>1.4.11</aliyun-sdk-vod-upload.version>
+        <aliyun-java-sdk-core.version>4.5.1</aliyun-java-sdk-core.version>
+        <aliyun-java-sdk-vod.version>2.15.11</aliyun-java-sdk-vod.version>
+        <!--        <aliyun-java-vod-upload.version>1.4.11</aliyun-java-vod-upload.version>-->
+        <!--        <aliyun-sdk-vod-upload.version>1.4.11</aliyun-sdk-vod-upload.version>-->
         <fastjson.version>1.2.28</fastjson.version>
         <gson.version>2.8.2</gson.version>
         <json.version>20170516</json.version>
@@ -46,6 +46,7 @@
         <docker.image.prefix>zx</docker.image.prefix>
         <cloud-alibaba.version>0.2.2.RELEASE</cloud-alibaba.version>
         <lombok.version>1.18.16</lombok.version>
+        <hutool.version>5.5.7</hutool.version>
     </properties>
 
     <dependencyManagement>
@@ -186,16 +187,16 @@
                 <artifactId>aliyun-java-sdk-vod</artifactId>
                 <version>${aliyun-java-sdk-vod.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.aliyun</groupId>
-                <artifactId>aliyun-java-vod-upload</artifactId>
-                <version>${aliyun-java-vod-upload.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.aliyun</groupId>
-                <artifactId>aliyun-sdk-vod-upload</artifactId>
-                <version>${aliyun-sdk-vod-upload.version}</version>
-            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>com.aliyun</groupId>-->
+            <!--                <artifactId>aliyun-java-vod-upload</artifactId>-->
+            <!--                <version>${aliyun-java-vod-upload.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.aliyun</groupId>-->
+            <!--                <artifactId>aliyun-sdk-vod-upload</artifactId>-->
+            <!--                <version>${aliyun-sdk-vod-upload.version}</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
@@ -218,8 +219,27 @@
                 <artifactId>canal.client</artifactId>
                 <version>${canal.client.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Sonatype Nexus Staging</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>
