@@ -1,9 +1,13 @@
 package com.suave.edu.controller;
 
 
+import cn.hutool.core.util.StrUtil;
+import com.suave.base.exception.MyException;
 import com.suave.common.result.R;
+import com.suave.edu.client.VodClient;
 import com.suave.edu.entity.Video;
 import com.suave.edu.service.VideoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +26,16 @@ public class VideoController {
     @Autowired
     private VideoService videoService;
 
+    @Autowired
+    private VodClient vodClient;
+
     /**
      * 添加小节
      *
      * @param video
      * @return
      */
+    @ApiOperation(value = "添加小节")
     @PostMapping("addVideo")
     public R addVideo(@RequestBody Video video) {
         videoService.save(video);
@@ -40,8 +48,21 @@ public class VideoController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "删除小节")
     @DeleteMapping("{id}")
     public R deleteVideo(@PathVariable("id") String id) {
+        videoService.removeById(id);
+        Video video = videoService.getById(id);
+        String videoSourceId = video.getVideoSourceId();
+        //判断小节里面是否有视频id
+        if (StrUtil.isNotEmpty(videoSourceId)) {
+            //根据视频id，远程调用实现视频删除
+            R result = vodClient.removeAliVideo(videoSourceId);
+            if (result.getCode() == 20001) {
+                throw new MyException(20001, "删除视频失败");
+            }
+        }
+        //删除小节
         videoService.removeById(id);
         return R.ok();
     }

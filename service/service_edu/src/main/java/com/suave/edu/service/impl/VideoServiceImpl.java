@@ -2,10 +2,12 @@ package com.suave.edu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.suave.edu.client.VodClient;
 import com.suave.edu.entity.Video;
 import com.suave.edu.mapper.VideoMapper;
 import com.suave.edu.service.VideoService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,8 +24,8 @@ import java.util.List;
 @Service
 public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements VideoService {
 
-//    @Autowired
-//    private VodClient vodClient;
+    @Autowired
+    private VodClient vodClient;
 
     /**
      * 根据课程id删除小节
@@ -50,9 +52,9 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         }
 
         //根据多个视频id删除多个视频
-//        if (videoIds.size() > 0) {
-//            vodClient.deleteBatch(videoIds);
-//        }
+        if (videoIds.size() > 0) {
+            vodClient.removeAliVideo(String.join(",", videoIds));
+        }
 
         QueryWrapper<Video> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id", courseId);

@@ -72,10 +72,10 @@ public class VodClientUtil {
      * @return DeleteVideoResponse 删除视频响应数据
      * @throws Exception
      */
-    public static DeleteVideoResponse deleteVideo(DefaultAcsClient client, String... videos) throws Exception {
+    public static DeleteVideoResponse deleteVideo(DefaultAcsClient client, String videos) throws Exception {
         DeleteVideoRequest request = new DeleteVideoRequest();
         //支持传入多个视频ID，多个用逗号分隔
-        request.setVideoIds(String.join(",", videos));
+        request.setVideoIds(videos);
         return client.getAcsResponse(request);
     }
 
