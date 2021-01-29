@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MsmConstant implements InitializingBean {
-    @Value("${aliyun.oss.file.keyId}")
+    @Value("${aliyun.msm.keyId}")
     private String keyId;
 
-    @Value("${aliyun.oss.file.keySecret}")
+    @Value("${aliyun.msm.keySecret}")
     private String keySecret;
     public static String KEY_ID;
     public static String KEY_SECRET;
