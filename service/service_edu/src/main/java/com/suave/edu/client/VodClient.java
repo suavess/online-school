@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @date 2021/1/27 8:39 下午
  */
 @Component
-@FeignClient("service-vod")
+@FeignClient(value = "service-vod", fallback = VodClientFallback.class)
 public interface VodClient {
     @DeleteMapping("/edu/vod/removeAliVideo/{id}")
     R removeAliVideo(@PathVariable("id") String id);

@@ -59,7 +59,7 @@ public class VideoController {
             //根据视频id，远程调用实现视频删除
             R result = vodClient.removeAliVideo(videoSourceId);
             if (result.getCode() == 20001) {
-                throw new MyException(20001, "删除视频失败");
+                throw new MyException(20001, "删除视频失败~熔断了～");
             }
         }
         //删除小节
