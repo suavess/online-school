@@ -34,6 +34,7 @@ public enum ResultEnum {
     FETCH_ACCESSTOKEN_FAILD(false, 23003, "获取accessToken失败"),
     FETCH_USERINFO_ERROR(false, 23004, "获取用户信息失败"),
     LOGIN_ERROR(false, 23005, "登录失败"),
+    REGISTER_ERROR(false, 23006, "注册失败"),
 
     COMMENT_EMPTY(false, 24006, "评论内容必须填写"),
 
