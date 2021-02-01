@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2021/1/29 11:41 上午
  */
 @RestController
-@RequestMapping("/edu/index")
+@RequestMapping("/front/edu/index")
 public class IndexFrontController {
 
     @Autowired

@@ -20,7 +20,7 @@ import java.util.List;
  * @date 2021/1/31 10:38 下午
  */
 @RestController
-@RequestMapping("/edu/teacher")
+@RequestMapping("/front/edu/teacher")
 public class TeacherFrontController {
 
     @Autowired
