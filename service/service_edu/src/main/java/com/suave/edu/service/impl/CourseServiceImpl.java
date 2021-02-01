@@ -1,9 +1,14 @@
 package com.suave.edu.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.suave.base.exception.MyException;
 import com.suave.edu.entity.Course;
 import com.suave.edu.entity.CourseDescription;
+import com.suave.edu.entity.CourseWebVO;
+import com.suave.edu.entity.frontvo.CourseQueryVO;
 import com.suave.edu.entity.vo.CourseInfoVO;
 import com.suave.edu.entity.vo.CoursePublishVO;
 import com.suave.edu.mapper.CourseMapper;
@@ -15,6 +20,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -137,6 +146,89 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         if (result == 0) {
             throw new MyException(20001, "删除失败");
         }
+    }
+
+    /**
+     * 前台带条件的分页查询前台
+     *
+     * @param pageCourse
+     * @param courseQueryVO
+     * @return
+     */
+    @Override
+    public Map<String, Object> getCourseFrontInfo(Page<Course> pageCourse, CourseQueryVO courseQueryVO) {
+        QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
+        // 判断条件值是否为空
+        if (!StrUtil.isEmpty(courseQueryVO.getSubjectParentId())) {
+            queryWrapper.eq("subject_parent_id", courseQueryVO.getSubjectParentId());
+        }
+
+        if (!StrUtil.isEmpty(courseQueryVO.getSubjectId())) {
+            queryWrapper.eq("subject_id", courseQueryVO.getSubjectId());
+        }
+
+        // 这三个字段是做排序，降序
+        if (!StrUtil.isEmpty(courseQueryVO.getBuyCountSort())) {
+            queryWrapper.orderByDesc("buy_count");
+        }
+
+        if (!StrUtil.isEmpty(courseQueryVO.getGmtCreateSort())) {
+            queryWrapper.orderByDesc("gmt_create");
+        }
+
+        if (!StrUtil.isEmpty(courseQueryVO.getPriceSort())) {
+            queryWrapper.orderByDesc("price");
+        }
+
+        baseMapper.selectPage(pageCourse, queryWrapper);
+
+        // 获取分页查询之后的详细信息
+        // 每页数据
+        List<Course> records = pageCourse.getRecords();
+        long current = pageCourse.getCurrent();
+        long pages = pageCourse.getPages();
+        long size = pageCourse.getSize();
+        long total = pageCourse.getTotal();
+        boolean hasNext = pageCourse.hasNext();
+        boolean hasPrevious = pageCourse.hasPrevious();
+
+        // 查询之后的数据进行封装
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("items", records);
+        map.put("current", current);
+        map.put("pages", pages);
+        map.put("size", size);
+        map.put("total", total);
+        map.put("hasNext", hasNext);
+        map.put("hasPrevious", hasPrevious);
+
+
+        return map;
 
     }
+
+    /**
+     * 根据课程id查询课程信息，用于前端的展示页面
+     *
+     * @param courseId
+     * @return
+     */
+    @Override
+    public CourseWebVO getBaseCourseInfo(String courseId) {
+        return baseMapper.getBaseCourseInfo(courseId);
+    }
+
+    /**
+     * 更新课程浏览数
+     *
+     * @param courseId
+     */
+    @Override
+    public void updatePageViewCount(String courseId) {
+        Course eduCourse = baseMapper.selectById(courseId);
+        eduCourse.setViewCount(eduCourse.getViewCount() + 1);
+        baseMapper.updateById(eduCourse);
+    }
+
+
 }

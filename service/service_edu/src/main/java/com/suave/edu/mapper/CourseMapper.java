@@ -2,6 +2,7 @@ package com.suave.edu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.suave.edu.entity.Course;
+import com.suave.edu.entity.CourseWebVO;
 import com.suave.edu.entity.vo.CoursePublishVO;
 
 /**
@@ -20,4 +21,6 @@ public interface CourseMapper extends BaseMapper<Course> {
      * @return
      */
     CoursePublishVO getPublishCourseInfo(String courseId);
+
+    CourseWebVO getBaseCourseInfo(String courseId);
 }
