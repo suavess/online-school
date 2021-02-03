@@ -1,4 +1,4 @@
-package com.suave.cloud.handler;
+package com.suave.gateway.handler;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;

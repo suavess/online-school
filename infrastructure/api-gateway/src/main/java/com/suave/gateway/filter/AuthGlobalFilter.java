@@ -1,4 +1,4 @@
-package com.suave.cloud.filter;
+package com.suave.gateway.filter;
 
 import com.google.gson.JsonObject;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
