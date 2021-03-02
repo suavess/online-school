@@ -4,7 +4,7 @@ package com.suave.cms.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.suave.cms.entity.Banner;
 import com.suave.cms.service.BannerService;
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +28,14 @@ public class BannerAdminController {
 
     @ApiOperation(value = "获取Banner分页列表")
     @GetMapping("pageBanner/{page}/{limit}")
-    public R pageBanner(
+    public CommonResult pageBanner(
             @ApiParam(name = "page", value = "当前页码", required = true)
             @PathVariable("page") Integer page,
             @ApiParam(name = "limit", value = "每页记录数", required = true)
             @PathVariable("limit") Integer limit) {
         Page<Banner> pageParam = new Page<>(page, limit);
         bannerService.page(pageParam);
-        return R.ok().data("items", pageParam.getRecords()).data("total", pageParam.getTotal());
+        return CommonResult.ok().data("items", pageParam.getRecords()).data("total", pageParam.getTotal());
     }
 
     /**
@@ -46,9 +46,9 @@ public class BannerAdminController {
      */
     @ApiOperation(value = "新增Banner")
     @PostMapping("save")
-    public R save(@RequestBody Banner banner) {
+    public CommonResult save(@RequestBody Banner banner) {
         bannerService.save(banner);
-        return R.ok();
+        return CommonResult.ok();
     }
 
 
@@ -60,9 +60,9 @@ public class BannerAdminController {
      */
     @ApiOperation(value = "修改Banner")
     @PutMapping("update")
-    public R updateById(@RequestBody Banner banner) {
+    public CommonResult updateById(@RequestBody Banner banner) {
         bannerService.updateById(banner);
-        return R.ok();
+        return CommonResult.ok();
     }
 
 
@@ -74,9 +74,9 @@ public class BannerAdminController {
      */
     @ApiOperation(value = "删除Banner")
     @DeleteMapping("remove/{id}")
-    public R remove(@PathVariable String id) {
+    public CommonResult remove(@PathVariable String id) {
         bannerService.removeById(id);
-        return R.ok();
+        return CommonResult.ok();
     }
 
 

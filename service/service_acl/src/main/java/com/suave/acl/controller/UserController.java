@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.suave.acl.entity.User;
 import com.suave.acl.service.RoleService;
 import com.suave.acl.service.UserService;
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class UserController {
 
     @ApiOperation(value = "获取管理用户分页列表")
     @GetMapping("{page}/{limit}")
-    public R index(
+    public CommonResult index(
             @ApiParam(name = "page", value = "当前页码", required = true)
             @PathVariable Long page,
 
@@ -55,50 +55,50 @@ public class UserController {
         }
 
         IPage<User> pageModel = userService.page(pageParam, wrapper);
-        return R.ok().data("items", pageModel.getRecords()).data("total", pageModel.getTotal());
+        return CommonResult.ok().data("items", pageModel.getRecords()).data("total", pageModel.getTotal());
     }
 
     @ApiOperation(value = "新增管理用户")
     @PostMapping("save")
-    public R save(@RequestBody User user) {
+    public CommonResult save(@RequestBody User user) {
         user.setPassword(SecureUtil.md5(user.getPassword()));
         userService.save(user);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     @ApiOperation(value = "修改管理用户")
     @PutMapping("update")
-    public R updateById(@RequestBody User user) {
+    public CommonResult updateById(@RequestBody User user) {
         userService.updateById(user);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     @ApiOperation(value = "删除管理用户")
     @DeleteMapping("remove/{id}")
-    public R remove(@PathVariable String id) {
+    public CommonResult remove(@PathVariable String id) {
         userService.removeById(id);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     @ApiOperation(value = "根据id列表删除管理用户")
     @DeleteMapping("batchRemove")
-    public R batchRemove(@RequestBody List<String> idList) {
+    public CommonResult batchRemove(@RequestBody List<String> idList) {
         userService.removeByIds(idList);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     @ApiOperation(value = "根据用户获取角色数据")
     @GetMapping("/toAssign/{userId}")
-    public R toAssign(@PathVariable String userId) {
+    public CommonResult toAssign(@PathVariable String userId) {
         Map<String, Object> roleMap = roleService.findRoleByUserId(userId);
-        return R.ok().data(roleMap);
+        return CommonResult.ok().data(roleMap);
     }
 
     @ApiOperation(value = "根据用户分配角色")
     @PostMapping("/doAssign")
-    public R doAssign(@RequestParam String userId, @RequestParam String[] roleId) {
+    public CommonResult doAssign(@RequestParam String userId, @RequestParam String[] roleId) {
         roleService.saveUserRoleRealtionShip(userId, roleId);
-        return R.ok();
+        return CommonResult.ok();
     }
 }
 

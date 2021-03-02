@@ -1,7 +1,7 @@
 package com.suave.edu.controller.front;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.edu.entity.Course;
 import com.suave.edu.entity.Teacher;
 import com.suave.edu.service.CourseService;
@@ -34,7 +34,7 @@ public class IndexFrontController {
      * @return
      */
     @GetMapping("hot")
-    public R index() {
+    public CommonResult index() {
 
         QueryWrapper<Course> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("id");
@@ -47,7 +47,7 @@ public class IndexFrontController {
         wrapperTeacher.last("limit 4");
         List<Teacher> teacherList = teacherService.list(wrapperTeacher);
 
-        return R.ok().data("courseList", courseList).data("teacherList", teacherList);
+        return CommonResult.ok().data("courseList", courseList).data("teacherList", teacherList);
     }
 
 

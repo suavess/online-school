@@ -1,6 +1,6 @@
 package com.suave.security.security;
 
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.common.utils.ResponseUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -22,6 +22,6 @@ public class UnauthorizedEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
 
-        ResponseUtil.out(response, R.error());
+        ResponseUtil.out(response, CommonResult.error());
     }
 }

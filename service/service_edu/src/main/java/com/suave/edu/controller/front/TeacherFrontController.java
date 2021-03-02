@@ -3,7 +3,7 @@ package com.suave.edu.controller.front;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.edu.entity.Course;
 import com.suave.edu.entity.Teacher;
 import com.suave.edu.service.CourseService;
@@ -31,12 +31,12 @@ public class TeacherFrontController {
 
     @ApiOperation(value = "分页讲师列表")
     @PostMapping("getTeacherFrontList/{page}/{limit}")
-    public R getTeacherFrontList(
+    public CommonResult getTeacherFrontList(
             @PathVariable("page") @ApiParam(name = "page", value = "当前页码", required = true) Integer page,
             @PathVariable("limit") @ApiParam(name = "limit", value = "每页记录数", required = true) Integer limit) {
         Page<Teacher> teacherPage = new Page<>(page, limit);
         IPage<Teacher> data = teacherService.getTeacherFrontList(teacherPage);
-        return R.ok().data("data", data);
+        return CommonResult.ok().data("data", data);
     }
 
     /**
@@ -46,7 +46,7 @@ public class TeacherFrontController {
      * @return
      */
     @GetMapping("getTeacherFrontInfo/{teacherId}")
-    public R getTeacherFrontInfo(@PathVariable String teacherId) {
+    public CommonResult getTeacherFrontInfo(@PathVariable String teacherId) {
         // 1. 根据讲师id查询讲师的基本信息
         Teacher teacher = teacherService.getById(teacherId);
 
@@ -55,7 +55,7 @@ public class TeacherFrontController {
         wrapper.eq("teacher_id", teacherId);
         List<Course> courseList = courseService.list(wrapper);
 
-        return R.ok().data("teacher", teacher).data("courseList", courseList);
+        return CommonResult.ok().data("teacher", teacher).data("courseList", courseList);
     }
 
 

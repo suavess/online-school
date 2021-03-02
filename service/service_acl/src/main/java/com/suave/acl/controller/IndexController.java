@@ -2,7 +2,7 @@ package com.suave.acl.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.suave.acl.service.IndexService;
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +25,11 @@ public class IndexController {
      * 根据token获取用户信息
      */
     @GetMapping("info")
-    public R info() {
+    public CommonResult info() {
         //获取当前登录用户用户名
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Map<String, Object> userInfo = indexService.getUserInfo(username);
-        return R.ok().data(userInfo);
+        return CommonResult.ok().data(userInfo);
     }
 
     /**
@@ -38,16 +38,16 @@ public class IndexController {
      * @return
      */
     @GetMapping("menu")
-    public R getMenu() {
+    public CommonResult getMenu() {
         //获取当前登录用户用户名
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<JSONObject> permissionList = indexService.getMenu(username);
-        return R.ok().data("permissionList", permissionList);
+        return CommonResult.ok().data("permissionList", permissionList);
     }
 
     @PostMapping("logout")
-    public R logout() {
-        return R.ok();
+    public CommonResult logout() {
+        return CommonResult.ok();
     }
 
 }

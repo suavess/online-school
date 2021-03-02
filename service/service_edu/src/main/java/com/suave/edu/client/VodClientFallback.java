@@ -1,6 +1,6 @@
 package com.suave.edu.client;
 
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class VodClientFallback implements VodClient {
     @Override
-    public R removeAliVideo(String id) {
-        return R.error().message("删除视频出错了～熔断～");
+    public CommonResult removeAliVideo(String id) {
+        return CommonResult.error().message("删除视频出错了～熔断～");
     }
 }

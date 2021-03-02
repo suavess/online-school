@@ -1,7 +1,7 @@
 package com.suave.edu.controller;
 
 
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.edu.entity.subject.SubjectDTO;
 import com.suave.edu.service.SubjectService;
 import io.swagger.annotations.Api;
@@ -37,10 +37,10 @@ public class SubjectController {
      */
     @ApiOperation(value = "读取excel内容")
     @PostMapping("addSubject")
-    public R addSubject(MultipartFile file) {
+    public CommonResult addSubject(MultipartFile file) {
         //上传过来excel文件
         subjectService.saveSubject(file, subjectService);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -49,10 +49,10 @@ public class SubjectController {
      */
     @ApiOperation(value = "课程分类列表")
     @GetMapping("getAllSubject")
-    public R getAllSubject() {
+    public CommonResult getAllSubject() {
         //list集合泛型是一级分类  一级分类下包含二级分类
         List<SubjectDTO> list = subjectService.getAllSubjectList(null);
-        return R.ok().data("list", list);
+        return CommonResult.ok().data("list", list);
     }
 
 }

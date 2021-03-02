@@ -1,6 +1,6 @@
 package com.suave.security.filter;
 
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.common.utils.ResponseUtil;
 import com.suave.security.security.TokenManager;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -50,13 +50,13 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
         try {
             authentication = getAuthentication(req);
         } catch (Exception e) {
-            ResponseUtil.out(res, R.error());
+            ResponseUtil.out(res, CommonResult.error());
         }
 
         if (authentication != null) {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } else {
-            ResponseUtil.out(res, R.error());
+            ResponseUtil.out(res, CommonResult.error());
         }
         chain.doFilter(req, res);
     }

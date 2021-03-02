@@ -1,7 +1,7 @@
 package com.suave.cms.controller;
 
 import com.suave.cms.service.BannerService;
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +21,8 @@ public class BannerFrontController {
     private BannerService bannerService;
 
     @GetMapping("getAllBanner")
-    public R getAllBanner() {
-        return R.ok().data("bannerList", bannerService.selectAllBanner());
+    public CommonResult getAllBanner() {
+        return CommonResult.ok().data("bannerList", bannerService.selectAllBanner());
     }
 
 

@@ -1,7 +1,7 @@
 package com.suave.base.exception.handler;
 
 import com.suave.base.exception.MyException;
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,22 +15,22 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public R error(Exception e) {
+    public CommonResult error(Exception e) {
         e.printStackTrace();
-        return R.error().message("执行了全局异常处理..");
+        return CommonResult.error().message("执行了全局异常处理..");
     }
 
     @ExceptionHandler(ArithmeticException.class)
-    public R error(ArithmeticException e) {
+    public CommonResult error(ArithmeticException e) {
         e.printStackTrace();
-        return R.error().message("执行了ArithmeticException异常处理..");
+        return CommonResult.error().message("执行了ArithmeticException异常处理..");
     }
 
     @ExceptionHandler(MyException.class)
-    public R error(MyException e) {
+    public CommonResult error(MyException e) {
         log.error(e.getMessage());
         e.printStackTrace();
-        return R.error().code(e.getCode()).message(e.getMsg());
+        return CommonResult.error().code(e.getCode()).message(e.getMsg());
     }
 
 

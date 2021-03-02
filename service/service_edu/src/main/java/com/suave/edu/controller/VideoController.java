@@ -3,7 +3,7 @@ package com.suave.edu.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.suave.base.exception.MyException;
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.edu.client.VodClient;
 import com.suave.edu.entity.Video;
 import com.suave.edu.service.VideoService;
@@ -37,9 +37,9 @@ public class VideoController {
      */
     @ApiOperation(value = "添加小节")
     @PostMapping("addVideo")
-    public R addVideo(@RequestBody Video video) {
+    public CommonResult addVideo(@RequestBody Video video) {
         videoService.save(video);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -50,21 +50,21 @@ public class VideoController {
      */
     @ApiOperation(value = "删除小节")
     @DeleteMapping("{id}")
-    public R deleteVideo(@PathVariable("id") String id) {
+    public CommonResult deleteVideo(@PathVariable("id") String id) {
         videoService.removeById(id);
         Video video = videoService.getById(id);
         String videoSourceId = video.getVideoSourceId();
         //判断小节里面是否有视频id
         if (StrUtil.isNotEmpty(videoSourceId)) {
             //根据视频id，远程调用实现视频删除
-            R result = vodClient.removeAliVideo(videoSourceId);
+            CommonResult result = vodClient.removeAliVideo(videoSourceId);
             if (result.getCode() == 20001) {
                 throw new MyException(20001, "删除视频失败~熔断了～");
             }
         }
         //删除小节
         videoService.removeById(id);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -74,9 +74,9 @@ public class VideoController {
      * @return
      */
     @PutMapping("updateVideo")
-    public R updateVideo(@RequestBody Video video) {
+    public CommonResult updateVideo(@RequestBody Video video) {
         videoService.updateById(video);
-        return R.ok();
+        return CommonResult.ok();
     }
 
 

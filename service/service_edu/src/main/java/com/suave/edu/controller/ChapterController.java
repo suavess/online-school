@@ -1,7 +1,7 @@
 package com.suave.edu.controller;
 
 
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.edu.entity.Chapter;
 import com.suave.edu.entity.chapter.ChapterVO;
 import com.suave.edu.service.ChapterService;
@@ -37,9 +37,9 @@ public class ChapterController {
      */
     @ApiOperation(value = "课程大纲列表")
     @GetMapping("getChapterVideo/{courseId}")
-    public R getChapterVideo(@PathVariable String courseId) {
+    public CommonResult getChapterVideo(@PathVariable String courseId) {
         List<ChapterVO> list = chapterService.getChapterVideoByCourseId(courseId);
-        return R.ok().data("allChapterVideo", list);
+        return CommonResult.ok().data("allChapterVideo", list);
     }
 
     /**
@@ -50,9 +50,9 @@ public class ChapterController {
      */
     @ApiOperation(value = "添加章节")
     @PostMapping("addChapter")
-    public R addChapter(@RequestBody Chapter chapter) {
+    public CommonResult addChapter(@RequestBody Chapter chapter) {
         chapterService.save(chapter);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -63,9 +63,9 @@ public class ChapterController {
      */
     @ApiOperation(value = "根据章节id查询")
     @GetMapping("getChapterInfo/{chapterId}")
-    public R getChapterInfo(@PathVariable String chapterId) {
+    public CommonResult getChapterInfo(@PathVariable String chapterId) {
         Chapter chapter = chapterService.getById(chapterId);
-        return R.ok().data("chapter", chapter);
+        return CommonResult.ok().data("chapter", chapter);
     }
 
     /**
@@ -76,9 +76,9 @@ public class ChapterController {
      */
     @ApiOperation(value = "修改章节")
     @PostMapping("updateChapter")
-    public R updateChapter(@RequestBody Chapter chapter) {
+    public CommonResult updateChapter(@RequestBody Chapter chapter) {
         chapterService.updateById(chapter);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -89,8 +89,8 @@ public class ChapterController {
      */
     @ApiOperation(value = "删除章节")
     @DeleteMapping("{chapterId}")
-    public R deleteChapter(@PathVariable String chapterId) {
-        return chapterService.deleteChapter(chapterId) ? R.ok() : R.error();
+    public CommonResult deleteChapter(@PathVariable String chapterId) {
+        return chapterService.deleteChapter(chapterId) ? CommonResult.ok() : CommonResult.error();
     }
 
 

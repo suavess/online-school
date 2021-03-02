@@ -1,6 +1,6 @@
 package com.suave.oss.controller;
 
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.oss.service.OssService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,20 +25,20 @@ public class OssController {
      */
     @ApiOperation(value = "上传头像的方法")
     @PostMapping
-    public R uploadOssFile(MultipartFile file) {
+    public CommonResult uploadOssFile(MultipartFile file) {
         //获取上传文件  MultipartFile
         //返回上传到oss的路径
         String url = ossService.uploadFileAvatar(file);
-        return R.ok().data("url", url);
+        return CommonResult.ok().data("url", url);
     }
 
     @ApiOperation(value = "文件删除")
     @DeleteMapping("remove")
-    public R removeFile(
+    public CommonResult removeFile(
             @ApiParam(value = "要删除的文件url路径", required = true)
             @RequestBody String url) {
         ossService.removeFile(url);
-        return R.ok().message("文件删除成功");
+        return CommonResult.ok().message("文件删除成功");
     }
 
 }

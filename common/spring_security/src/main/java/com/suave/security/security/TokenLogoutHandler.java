@@ -1,6 +1,6 @@
 package com.suave.security.security;
 
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.common.utils.ResponseUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
@@ -35,7 +35,7 @@ public class TokenLogoutHandler implements LogoutHandler {
             String userName = tokenManager.getUserFromToken(token);
             redisTemplate.delete(userName);
         }
-        ResponseUtil.out(response, R.ok());
+        ResponseUtil.out(response, CommonResult.ok());
     }
 
 }

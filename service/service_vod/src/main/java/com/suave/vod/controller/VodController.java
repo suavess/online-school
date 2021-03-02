@@ -4,7 +4,7 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthRequest;
 import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
 import com.suave.base.exception.MyException;
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.vod.constant.VodConstant;
 import com.suave.vod.service.VodService;
 import com.suave.vod.utils.VodClientUtil;
@@ -29,9 +29,9 @@ public class VodController {
      * @return
      */
     @PostMapping("uploadAliVideo")
-    public R uploadAliVideo(MultipartFile file) {
+    public CommonResult uploadAliVideo(MultipartFile file) {
         String videoId = vodService.uploadAliVideo(file);
-        return R.ok().data("videoId", videoId);
+        return CommonResult.ok().data("videoId", videoId);
     }
 
     /**
@@ -41,9 +41,9 @@ public class VodController {
      * @return
      */
     @DeleteMapping("removeAliVideo/{id}")
-    public R removeAliVideo(@PathVariable("id") String id) {
+    public CommonResult removeAliVideo(@PathVariable("id") String id) {
         vodService.removeAliVideo(id);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -53,7 +53,7 @@ public class VodController {
      * @return
      */
     @GetMapping("getPalyAuth/{id}")
-    public R getPlayAuth(@PathVariable String id) {
+    public CommonResult getPlayAuth(@PathVariable String id) {
         // 创建初始化对象
         DefaultAcsClient client = VodClientUtil.initVodClient(VodConstant.ACCESS_KEY_ID, VodConstant.ACCESS_KEY_SECRET);
 
@@ -63,7 +63,7 @@ public class VodController {
         try {
             GetVideoPlayAuthResponse response = client.getAcsResponse(request);
             String PlayAuth = response.getPlayAuth();
-            return R.ok().data("PlayAuth", PlayAuth);
+            return CommonResult.ok().data("PlayAuth", PlayAuth);
         } catch (Exception e) {
             throw new MyException(20001, "获取凭证失败");
         }

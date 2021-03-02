@@ -1,7 +1,7 @@
 package com.suave.edu.controller.front;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.common.utils.JwtUtils;
 import com.suave.edu.client.OrderClient;
 import com.suave.edu.entity.Course;
@@ -44,11 +44,11 @@ public class CourseFrontController {
      * @return
      */
     @PostMapping("getFrontCourseList/{page}/{limit}")
-    public R getFrontCourseList(@PathVariable("page") long page, @PathVariable("limit") long limit,
-                                @RequestBody(required = false) CourseQueryVO courseQueryVo) {
+    public CommonResult getFrontCourseList(@PathVariable("page") long page, @PathVariable("limit") long limit,
+                                           @RequestBody(required = false) CourseQueryVO courseQueryVo) {
         Page<Course> pageCourse = new Page<>(page, limit);
         Map<String, Object> map = courseService.getCourseFrontInfo(pageCourse, courseQueryVo);
-        return R.ok().data(map);
+        return CommonResult.ok().data(map);
     }
 
     /**
@@ -58,7 +58,7 @@ public class CourseFrontController {
      * @return
      */
     @GetMapping("getFrontCourseInfo/{courseId}")
-    public R getFrontCourseInfo(@PathVariable String courseId, HttpServletRequest request) {
+    public CommonResult getFrontCourseInfo(@PathVariable String courseId, HttpServletRequest request) {
 
         // 1. 根据课程id，编写sql语句来查询课程信息
         CourseWebVO courseWebVo = courseService.getBaseCourseInfo(courseId);
@@ -70,7 +70,7 @@ public class CourseFrontController {
         // 远程调用
         boolean buyCourse = orderClient.isBuyCourse(JwtUtils.getMemberIdByJwtToken(request), courseId);
 
-        return R.ok().data("courseWebVo", courseWebVo).data("chapterList", chapterList).data("isBuy", buyCourse);
+        return CommonResult.ok().data("courseWebVo", courseWebVo).data("chapterList", chapterList).data("isBuy", buyCourse);
     }
 
 }

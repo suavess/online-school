@@ -3,7 +3,7 @@ package com.suave.edu.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import com.suave.edu.entity.Course;
 import com.suave.edu.entity.vo.CourseInfoVO;
 import com.suave.edu.entity.vo.CoursePublishVO;
@@ -41,10 +41,10 @@ public class CourseController {
      */
     @ApiOperation(value = "添加课程基本信息")
     @PostMapping("addCourseInfo")
-    public R addCourseInfo(@RequestBody CourseInfoVO courseInfoVo) {
+    public CommonResult addCourseInfo(@RequestBody CourseInfoVO courseInfoVo) {
         //返回添加之后课程id，为了第二个页面添加课程大纲使用
         String id = courseService.saveCourseInfo(courseInfoVo);
-        return R.ok().data("courseId", id);
+        return CommonResult.ok().data("courseId", id);
     }
 
     /**
@@ -55,9 +55,9 @@ public class CourseController {
      */
     @ApiOperation(value = "根据课程id查询课程基本信息")
     @GetMapping("getCourseInfo/{courseId}")
-    public R getCourseInfo(@PathVariable String courseId) {
+    public CommonResult getCourseInfo(@PathVariable String courseId) {
         CourseInfoVO courseInfoVo = courseService.getCourseInfo(courseId);
-        return R.ok().data("courseInfoVo", courseInfoVo);
+        return CommonResult.ok().data("courseInfoVo", courseInfoVo);
     }
 
     /**
@@ -68,9 +68,9 @@ public class CourseController {
      */
     @ApiOperation(value = "修改课程信息")
     @PostMapping("updateCourseInfo")
-    public R updateCourseInfo(@RequestBody CourseInfoVO courseInfoVo) {
+    public CommonResult updateCourseInfo(@RequestBody CourseInfoVO courseInfoVo) {
         courseService.updateCourseInfo(courseInfoVo);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -81,9 +81,9 @@ public class CourseController {
      */
     @ApiOperation(value = "确认课程信息")
     @GetMapping("getPublishCourseInfo/{id}")
-    public R getPublishCourseInfo(@PathVariable String id) {
+    public CommonResult getPublishCourseInfo(@PathVariable String id) {
         CoursePublishVO coursePublishVo = courseService.publishCourseInfo(id);
-        return R.ok().data("publishCourse", coursePublishVo);
+        return CommonResult.ok().data("publishCourse", coursePublishVo);
     }
 
     /**
@@ -94,12 +94,12 @@ public class CourseController {
      */
     @ApiOperation(value = "课程最终发布")
     @PostMapping("publishCourse/{id}")
-    public R publishCourse(@PathVariable String id) {
+    public CommonResult publishCourse(@PathVariable String id) {
         Course course = new Course();
         course.setId(id);
         course.setStatus("Normal");
         courseService.updateById(course);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -112,8 +112,8 @@ public class CourseController {
      */
     @ApiOperation(value = "课程列表分页查询显示带条件")
     @PostMapping("pageCourseCondition/{current}/{limit}")
-    public R pageCourseCondition(@PathVariable long current, @PathVariable long limit,
-                                 @RequestBody(required = false) CourseQuery courseQuery) {
+    public CommonResult pageCourseCondition(@PathVariable long current, @PathVariable long limit,
+                                            @RequestBody(required = false) CourseQuery courseQuery) {
         //创建page对象
         Page<Course> pageCourse = new Page<>(current, limit);
         //构建条件
@@ -142,7 +142,7 @@ public class CourseController {
         long total = pageCourse.getTotal();
         //数据list集合
         List<Course> records = pageCourse.getRecords();
-        return R.ok().data("total", total).data("records", records);
+        return CommonResult.ok().data("total", total).data("records", records);
     }
 
     /**
@@ -153,9 +153,9 @@ public class CourseController {
      */
     @ApiOperation(value = "删除课程")
     @DeleteMapping("deleteCourseById/{courseId}")
-    public R deleteCourse(@PathVariable String courseId) {
+    public CommonResult deleteCourse(@PathVariable String courseId) {
         courseService.removeCourse(courseId);
-        return R.ok();
+        return CommonResult.ok();
     }
 
 

@@ -1,6 +1,6 @@
 package com.suave.edu.client;
 
-import com.suave.common.result.R;
+import com.suave.common.result.CommonResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,5 +16,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(value = "service-vod", fallback = VodClientFallback.class)
 public interface VodClient {
     @DeleteMapping("/edu/vod/removeAliVideo/{id}")
-    R removeAliVideo(@PathVariable("id") String id);
+    CommonResult removeAliVideo(@PathVariable("id") String id);
 }
